@@ -1,80 +1,101 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCards, Autoplay } from "swiper/modules";
+import Image from "next/image";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
+// Import Swiper styles
 import "swiper/css";
 import "swiper/css/effect-cards";
 
-const events = [
-    {
-        title: "UI/UX Workshop",
-        description: "From Ideas to Interfaces: A hands-on UI/UX workshop by Divya Maurya, Experience Designer & Specialist at LTIMindtree. Learn design principles, wireframing, and prototyping.",
-        image: "/assets/UIUX WorkShop Banner and PPT.png" 
-    },
-    {
-        title: "React Workshop",
-        description: "Master React fundamentals and build interactive UIs with this hands-on workshop.",
-        image: "/assets/UIUX WorkShop Banner and PPT.png" 
-    },
-    {
-        title: "Python for Data Science",
-        description: "Explore data manipulation, visualization, and machine learning using Python.",
-        image: "/assets/UIUX WorkShop Banner and PPT.png" 
-    },
-    {
-        title: "Angular Workshop",
-        description: "Deep dive into Angular framework and create powerful, scalable web applications.",
-        image: "/assets/UIUX WorkShop Banner and PPT.png" 
-    }
+const slides = [
+  {
+    title: "Workshop Event",
+    imageUrl: "/assets/WorkshopBanner.png",
+  },
+  {
+    title: "Neon Lights",
+    imageUrl: "/assets/WorkshopBanner.png",
+  },
+  {
+    title: "Cyberpunk Streets",
+    imageUrl: "/assets/WorkshopBanner.png",
+  },
+  {
+    title: "Holographic Interface",
+    imageUrl: "/assets/WorkshopBanner.png",
+  },
+  {
+    title: "AI Robotics",
+    imageUrl: "/assets/WorkshopBanner.png",
+  },
 ];
 
+const StackedCarousel = () => {
+  const [swiper, setSwiper] = useState(null);
+
+  return (
+    <div className="relative w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Swiper
+        effect={"cards"}
+        grabCursor={true}
+        modules={[EffectCards, Autoplay]}
+        className="w-full aspect-[16/9] rounded-lg shadow-xl overflow-hidden"
+        loop={true}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: false,
+        }}
+        onSwiper={setSwiper}
+      >
+        {slides.map((slide, index) => (
+          <SwiperSlide key={index} className="rounded-xl shadow-lg overflow-hidden">
+            <div className="relative w-full h-full">
+              <Image
+                src={slide.imageUrl || "/placeholder.svg"}
+                alt={slide.title}
+                layout="fill"
+                objectFit="cover"
+                className="transition-transform duration-300 ease-in-out transform hover:scale-105"
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent text-white p-4 sm:p-6">
+                <h2 className="text-xl sm:text-2xl font-bold">{slide.title}</h2>
+              </div>
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+      <div className="absolute top-1/2 left-0 right-0 flex justify-between items-center z-10 px-4 sm:px-6 -translate-y-1/2">
+        <button
+          onClick={() => swiper?.slidePrev()}
+          className="text-white p-2 rounded-full transition-all duration-300 ease-in-out focus:outline-none"
+        >
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+        <button
+          onClick={() => swiper?.slideNext()}
+          className="text-white p-2 rounded-full transition-all duration-300 ease-in-out focus:outline-none"
+        >
+          <ChevronRight className="w-6 h-6" />
+        </button>
+      </div>
+    </div>
+  );
+};
+
 const PastEvent = () => {
-    const [activeIndex, setActiveIndex] = useState(0);
-
-    return (
-        <div id="pastevent" className="container mt-20">
-            <div className="text-center mb-10">
-                <h1 className="text-8xl font-bold text-gray-900">Past Events</h1>
-                <h2 className="text-xl text-gray-700 mt-2">Explore our recent workshops and tech events.</h2>
-            </div>
-
-            <div className="container mx-auto px-10 flex flex-col md:flex-row items-center gap-10">
-                {/* Left Side: Event Description */}
-                <div className="w-full md:w-2/5">
-                    <h1 className="text-4xl font-bold mb-4 leading-snug text-gray-900">{events[activeIndex].title}</h1>
-                    <p className="text-lg text-gray-700">{events[activeIndex].description}</p>
-                </div>
-
-                {/* Right Side: Swiper Carousel */}
-                <div className="w-full md:w-3/5 flex justify-center">
-                    <Swiper
-                        effect={"cards"}
-                        grabCursor={true}
-                        loop={true}
-                        modules={[EffectCards, Autoplay]}
-                        autoplay={{ delay: 3000, disableOnInteraction: false, pauseOnMouseEnter: false }}
-                        className="w-[650px] h-[500px]"
-                        onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
-                    >
-                        {events.map((event, index) => (
-                            <SwiperSlide 
-                                key={index} 
-                                className="flex flex-col items-center bg-white/30 backdrop-blur-lg shadow-lg p-6 rounded-2xl text-white border border-white/20"
-                            >
-                                <img
-                                    src={event.image}
-                                    alt={event.title}
-                                    className="w-[600px] h-[400px] object-contain rounded-lg shadow-md"
-                                />
-                                <h2 className="text-3xl text-black font-semibold text-center mt-4 drop-shadow-md">{event.title}</h2>
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
-                </div>
-            </div>
-        </div>
-    );
+  return (
+    <div className="min-h-screen text-white py-12 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
+      <div className="max-w-7xl mx-auto text-center">
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-8 sm:mb-12 lg:mb-16 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+          Past Events
+        </h1>
+        <StackedCarousel />
+      </div>
+    </div>
+  );
 };
 
 export default PastEvent;

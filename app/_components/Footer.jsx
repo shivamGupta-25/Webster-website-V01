@@ -1,13 +1,28 @@
+"use client";
 import Image from "next/image";
 import { FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 const Footer = () => {
     return (
-        <div className="mt-24">
+        <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 50 }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+            viewport={{ once: false, amount: 0.2 }}
+            className="mt-24"
+        >
             <footer className="bg-gradient-to-b from-gray-900 to-black text-gray-300 py-10">
-                <div className="container mx-auto px-6 lg:px-20 flex flex-col md:flex-row justify-between items-center gap-8">
+                <div className="container mx-auto px-6 lg:px-20 flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
                     {/* Logo */}
-                    <div className="flex-shrink-0">
+                    <motion.div 
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        viewport={{ once: false }}
+                        className="flex-shrink-0 flex justify-center md:justify-start"
+                    >
                         <a href="/" className="flex items-center gap-2">
                             <Image
                                 alt="logo"
@@ -17,22 +32,34 @@ const Footer = () => {
                                 height={90}
                             />
                         </a>
-                    </div>
+                    </motion.div>
 
                     {/* Contact Email */}
-                    <div className="text-lg text-white font-bold flex items-center gap-1">
-                        <span className="">Contact:</span>
+                    <motion.div 
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.4 }}
+                        viewport={{ once: false }}
+                        className="text-lg text-white font-bold flex flex-col md:flex-row items-center gap-1"
+                    >
+                        <span>Contact:</span>
                         <a
                             href="mailto:websters@shivaji.du.ac.in"
                             aria-label="Email us"
-                            className="hover:underline transition"
+                            className="hover:underline transition text-blue-400"
                         >
                             websters@shivaji.du.ac.in
                         </a>
-                    </div>
+                    </motion.div>
 
                     {/* Social Media Icons */}
-                    <div className="flex space-x-6 text-2xl">
+                    <motion.div 
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.6 }}
+                        viewport={{ once: false }}
+                        className="flex space-x-6 text-2xl justify-center md:justify-start"
+                    >
                         <a
                             href="https://instagram.com/yourbrand"
                             target="_blank"
@@ -51,14 +78,20 @@ const Footer = () => {
                         >
                             <FaLinkedinIn />
                         </a>
-                    </div>
+                    </motion.div>
                 </div>
 
                 {/* Copyright */}
-                <div className="text-center text-sm mt-8 border-t border-gray-700 pt-4 text-gray-500">
+                <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.8 }}
+                    viewport={{ once: false }}
+                    className="text-center text-sm mt-8 border-t border-gray-700 pt-4 text-gray-500"
+                >
                     <p className="text-lg">&copy; {new Date().getFullYear()} Webster's. All rights reserved.</p>
                     <p className="mt-4 text-gray-400 text-lg">
-                        Designed & Developed by:{" "}
+                        Designed & Developed by: {" "}
                         <a
                             href="https://www.linkedin.com/in/yourbrand"
                             className="text-blue-400 hover:underline"
@@ -68,10 +101,9 @@ const Footer = () => {
                             Shivam Raj Gupta
                         </a>
                     </p>
-                </div>
-
+                </motion.div>
             </footer>
-        </div>
+        </motion.div>
     );
 };
 

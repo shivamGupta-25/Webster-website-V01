@@ -1,197 +1,145 @@
 'use client'
 
 import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
     Button,
     Dialog,
     DialogPanel,
-    Disclosure,
-    DisclosureButton,
-    DisclosurePanel,
-    Popover,
-    PopoverButton,
-    PopoverGroup,
-    PopoverPanel,
+    Transition,
 } from '@headlessui/react'
 import {
-    ArrowPathIcon,
     Bars3Icon,
-    ChartPieIcon,
-    CursorArrowRaysIcon,
-    FingerPrintIcon,
-    SquaresPlusIcon,
     XMarkIcon,
 } from '@heroicons/react/24/outline'
-import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
 import Image from 'next/image'
 
-const products = [
-    { name: 'Analytics', description: 'Get a better understanding of your traffic', href: '#', icon: ChartPieIcon },
-    { name: 'Engagement', description: 'Speak directly to your customers', href: '#', icon: CursorArrowRaysIcon },
-    { name: 'Security', description: 'Your customers’ data will be safe and secure', href: '#', icon: FingerPrintIcon },
-    { name: 'Integrations', description: 'Connect with third-party tools', href: '#', icon: SquaresPlusIcon },
-    { name: 'Automations', description: 'Build strategic funnels that will convert', href: '#', icon: ArrowPathIcon },
+const navLinks = [
+    { name: 'Home', href: '/' },
+    { name: 'About Us', href: '#about' },
+    { name: 'Workshop', href: '#workshop' },
+    { name: 'Past Event', href: '#pastevent' },
+    { name: 'Council', href: '#council' },
+    { name: 'Techelons', href: '/techelons' },
 ]
-const callsToAction = [
-    { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
-    { name: 'Contact sales', href: '#', icon: PhoneIcon },
-]
-
+    
 const Header = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
     return (
-        <header className="bg-white container">
-            <nav aria-label="Global" className="mx-auto flex items-center justify-between py-6 lg:px-8">
-                <div className="flex lg:flex-1">
-                    <a href="/" className="-m-1.5 p-1.5">
-                        <span className="sr-only">Your Company</span>
-                        <Image
-                            alt="logo"
-                            src="/assets/logo.png"
-                            className="h-8 w-auto"
-                            width={120}
-                            height={80}
-                        />
-                    </a>
-                </div>
-                <div className="flex lg:hidden">
-                    <button
-                        type="button"
-                        onClick={() => setMobileMenuOpen(true)}
-                        className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-                    >
-                        <span className="sr-only">Open main menu</span>
-                        <Bars3Icon aria-hidden="true" className="size-6" />
-                    </button>
-                </div>
-                <PopoverGroup className="hidden lg:flex lg:gap-x-12">
-                    <a href="/" className="text-md/6 font-semibold text-gray-900 hover:underline transition-all">
-                        Home
-                    </a>
-                    <a href="#about" className="text-md/6 font-semibold text-gray-900 hover:underline transition-all">
-                        About Us
-                    </a>
-                    <a href="#workshop" className="text-md/6 font-semibold text-gray-900 hover:underline transition-all">
-                        Workshop
-                    </a>
-                    <a href="#pastevent" className="text-md/6 font-semibold text-gray-900 hover:underline transition-all">
-                        Past Event
-                    </a>
-                    <a href="#council" className="text-md/6 font-semibold text-gray-900 hover:underline transition-all">
-                        Council
-                    </a>
-                    <a href="#" className="text-md/6 font-semibold text-gray-900 hover:underline transition-all">
-                        Techelons
-                    </a>
-                    {/* <a href="#" className="text-md/6 font-semibold text-gray-900 hover:underline transition-all">
-                        Contact Us
-                    </a> */}
-                </PopoverGroup>
-                <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                    {/* <a href="#" className="text-sm/6 font-semibold text-gray-900">
-                        Log in <span aria-hidden="true">&rarr;</span>
-                    </a> */}
-                    <Button className="bg-gray-900 text-white py-3 px-5 rounded-full shadow-lg shadow-gray-400 hover:scale-105 transition-all">
-                        Register Now
-                    </Button>
-                </div>
-            </nav>
-            <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
-                <div className="fixed inset-0 z-10" />
-                <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-                    <div className="flex items-center justify-between">
-                        <a href="#" className="-m-1.5 p-1.5">
-                            <span className="sr-only">Your Company</span>
-                            <img
-                                alt=""
-                                src="\logo.png"
-                                className="h-8 w-auto"
-                            />
+        <motion.header 
+            initial={{ opacity: 0, y: -20 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ duration: 0.5 }}
+            className="bg-white container mx-auto px-6 py-6 lg:py-8"
+        >
+            <nav className="flex items-center justify-between w-full">
+                <a href="/" className="flex-shrink-0 z-10">
+                    <Image
+                        alt="logo"
+                        src="/assets/logo.png"
+                        width={120}
+                        height={80}
+                        className="h-10 w-auto"
+                    />
+                </a>
+                
+                {/* Desktop Navigation */}
+                <motion.div 
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    className="hidden md:flex md:items-center md:gap-6 lg:gap-8 mx-auto"
+                >
+                    {navLinks.map((link) => (
+                        <a key={link.name} href={link.href} className="text-md font-semibold text-gray-900 hover:underline">
+                            {link.name}
                         </a>
-                        <button
-                            type="button"
+                    ))}
+                </motion.div>
+                
+                {/* Register Button - Desktop */}
+                <motion.div 
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.3, delay: 0.4 }}
+                    className="hidden md:flex md:items-center"
+                >
+                    <motion.button 
+                        whileHover={{ scale: 1.05 }} 
+                        whileTap={{ scale: 0.95 }}
+                        className="bg-gray-900 text-white py-2 px-4 rounded-full shadow-md"
+                    >
+                        Register Now
+                    </motion.button>
+                </motion.div>
+                
+                {/* Mobile Menu Button */}
+                <button
+                    type="button"
+                    onClick={() => setMobileMenuOpen(true)}
+                    className="md:hidden p-2 text-gray-700 z-10"
+                >
+                    <Bars3Icon className="h-6 w-6" />
+                </button>
+            </nav>
+
+            {/* Mobile Menu */}
+            <AnimatePresence>
+                {mobileMenuOpen && (
+                    <Dialog open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} className="fixed inset-0 z-20">
+                        <motion.div 
+                            initial={{ opacity: 0 }} 
+                            animate={{ opacity: 1 }} 
+                            exit={{ opacity: 0 }} 
+                            className="fixed inset-0 bg-gray-900 bg-opacity-50"
                             onClick={() => setMobileMenuOpen(false)}
-                            className="-m-2.5 rounded-md p-2.5 text-gray-700"
+                        />
+                        <motion.div 
+                            initial={{ x: '100%' }} 
+                            animate={{ x: 0 }} 
+                            exit={{ x: '100%' }} 
+                            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                            className="fixed inset-y-0 right-0 w-64 bg-white px-6 py-6 shadow-lg z-30"
                         >
-                            <span className="sr-only">Close menu</span>
-                            <XMarkIcon aria-hidden="true" className="size-6" />
-                        </button>
-                    </div>
-                    <div className="mt-6 flow-root">
-                        <div className="-my-6 divide-y divide-gray-500/10">
-                            <div className="space-y-2 py-6">
-                                {/* <Disclosure as="div" className="-mx-3">
-                                    <DisclosureButton className="group flex w-full items-center justify-between rounded-lg py-2 pr-3.5 pl-3 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">
-                                        Product
-                                        <ChevronDownIcon aria-hidden="true" className="size-5 flex-none group-data-open:rotate-180" />
-                                    </DisclosureButton>
-                                    <DisclosurePanel className="mt-2 space-y-2">
-                                        {[...products, ...callsToAction].map((item) => (
-                                            <DisclosureButton
-                                                key={item.name}
-                                                as="a"
-                                                href={item.href}
-                                                className="block rounded-lg py-2 pr-3 pl-6 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50"
-                                            >
-                                                {item.name}
-                                            </DisclosureButton>
-                                        ))}
-                                    </DisclosurePanel>
-                                </Disclosure> */}
-                                <a
-                                    href="#"
-                                    className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                                >
-                                    Home
+                            <div className="flex items-center justify-between">
+                                <a href="/" className="flex-shrink-0">
+                                    <Image
+                                        alt="logo"
+                                        src="/assets/logo.png"
+                                        width={100}
+                                        height={60}
+                                        className="h-8 w-auto"
+                                    />
                                 </a>
-                                <a
-                                    href="#"
-                                    className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                                <button
+                                    type="button"
+                                    onClick={() => setMobileMenuOpen(false)}
+                                    className="p-2 text-gray-700"
                                 >
-                                    About Us
-                                </a>
-                                <a
-                                    href="#"
-                                    className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                                >
-                                    Workshop
-                                </a>
-                                <a
-                                    href="#"
-                                    className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                                >
-                                    Past Event
-                                </a>
-                                <a
-                                    href="#"
-                                    className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                                >
-                                    Council
-                                </a>
-                                <a
-                                    href="#"
-                                    className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                                >
-                                    Techelons
-                                </a>
-                                {/* <a
-                                    href="#"
-                                    className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                                >
-                                    Contact Us
-                                </a> */}
+                                    <XMarkIcon className="h-6 w-6" />
+                                </button>
                             </div>
-                            <div className="py-6">
-                                <Button className="bg-gray-900 text-white py-3 px-5 rounded-full shadow-lg shadow-gray-400 hover:scale-105 transition-all">
+                            <div className="mt-6 space-y-4">
+                                {navLinks.map((link) => (
+                                    <a key={link.name} href={link.href} className="block text-lg font-semibold text-gray-900 hover:underline">
+                                        {link.name}
+                                    </a>
+                                ))}
+                                <hr className="border-gray-300 my-4" />
+                                <motion.button 
+                                    whileHover={{ scale: 1.05 }} 
+                                    whileTap={{ scale: 0.95 }}
+                                    className="w-full bg-gray-900 text-white py-3 rounded-full shadow-md"
+                                >
                                     Register Now
-                                </Button>
+                                </motion.button>
                             </div>
-                        </div>
-                    </div>
-                </DialogPanel>
-            </Dialog>
-        </header>
+                        </motion.div>
+                    </Dialog>
+                )}
+            </AnimatePresence>
+        </motion.header>
     )
 }
 
